@@ -7,13 +7,13 @@ package = "freeze-code.nvim"
 version = _MODREV .. _SPECREV
 
 description = {
-  summary = "A code snapshot plugin using freeze.",
+  summary = "A code snapshot plugin using freeze",
   detailed = [[
-    This plugin allows you to take a "screenshot" of your code,
+    This plugin allows you to take a `screenshot` of your code,
     thanks to freeze by charm.sh.
-]],
+    ]],
   homepage = "https://github.com/AlejandroSuero/freeze-code.nvim",
-  license = "MIT/X11",
+  license = "MIT",
   labels = { "neovim", "snapshot", "screenshot", "freeze" },
 }
 
