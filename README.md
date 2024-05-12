@@ -77,6 +77,13 @@ local opts = {
 > The commands to copy, as defaults per OS will be in the
 > [bin-directory](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/bin)
 
+Once you have it installed, you can use `:checkhealt freeze-code` to see if there
+are any problems with the installation or you need to install aditional tools.
+
+<div align="right">
+  (<a href="#readme-top">Back to top</a>)
+</div>
+
 ## Contributing
 
 Thank you to everyone that is contributing and to those who want to contribute.
@@ -96,3 +103,7 @@ Any contribution is welcomed!
 
 For more information, check
 [CONTRIBUTING.md](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/contrib/CONTRIBUTING.md).
+
+<div align="right">
+  (<a href="#readme-top">Back to top</a>)
+</div>
