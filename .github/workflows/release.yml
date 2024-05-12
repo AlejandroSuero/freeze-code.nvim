@@ -18,4 +18,4 @@ jobs:
           detailed_description: |
             This plugin allows you to take a "screenshot" of your code,
             thanks to freeze by charm.sh.
-          licence: "MIT/X11"
+          license: "MIT/X11"
