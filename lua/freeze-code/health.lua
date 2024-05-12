@@ -5,8 +5,10 @@ local ok = health.ok or health.report_ok
 local warn = health.warn or health.report_warn
 local error = health.error or health.report_error
 
-local is_win = vim.api.nvim_call_function("has", { "win32" }) == 1
-local is_macos = vim.api.nvim_call_function("has", { "macunix" }) == 1
+local os_util = require("freeze-code.utils").os
+
+local is_win = os_util.is_win
+local is_macos = os_util.is_macos
 
 ---@class FreezeCodeHealthPackage
 ---@field name string: package name

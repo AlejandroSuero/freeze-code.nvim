@@ -9,15 +9,3 @@ if vim.g.loaded_freeze_code == 1 then
 end
 vim.g.loaded_freeze_code = 1
 vim.api.nvim_out_write("[freeze-code] initialized")
-
-vim.api.nvim_create_user_command("Freeze", function(opts)
-  local freeze_cmd = require("freeze-code")
-  vim.api.nvim_out_write("[freeze-code] Freeze called")
-  if opts.count > 0 then
-    freeze_cmd.freeze(opts.line1, opts.line2)
-  else
-    freeze_cmd.freeze()
-  end
-end, {
-  range = true,
-})

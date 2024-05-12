@@ -43,27 +43,30 @@ describe("[freeze-code test]", function()
   describe("setup", function()
     it("creates user commands", function()
       vim.cmd("runtime plugin/freeze-code.lua")
+      freeze_code.setup()
       local user_commands = api.nvim_get_commands({})
       not_same(nil, user_commands.Freeze)
     end)
 
     it("with default config", function()
-      local expected = require("freeze-code.config")
+      local expected = require("freeze-code").config
       freeze_code.setup()
       same(freeze_code.config, expected)
     end)
 
     it("with custom config", function()
-      local default_config = require("freeze-code.config")
+      local default_config = require("freeze-code").config
       local opts = {
         copy = true,
-        freeze_opts = {
+        freeze_config = {
           theme = "rose-pine-moon",
         },
       }
-      local expected = vim.tbl_extend("force", {}, default_config, opts or {})
+      local expected = vim.tbl_deep_extend("force", {}, default_config, opts or {})
       freeze_code.setup(expected)
       same(freeze_code.config, expected)
+      same(freeze_code.config.copy, true)
+      same(freeze_code.config.freeze_config.theme, "rose-pine-moon")
     end)
   end)
 
@@ -78,7 +81,6 @@ describe("[freeze-code test]", function()
     after_each(function()
       vim.loop.chdir(vim.env.PWD)
       os.remove(vim.env.PWD .. "/freeze.png")
-      print("REMOVED `freeze.png`\n")
     end)
     it("creates an image from a file", function()
       local buffer = create_buffer()
