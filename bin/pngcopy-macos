@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+osascript \
+  -e "on run args" \
+  -e "set the clipboard to (read (POSIX file (first item of args)) as JPEG picture)" \
+  -e end \
+  "$@"

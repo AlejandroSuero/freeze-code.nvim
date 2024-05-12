@@ -1,0 +1,10 @@
+std="neovim"
+
+exclude = ["./*.rockspec"]
+
+[rules]
+global_usage = "warn"
+multiple_statements = "allow"
+incorrect_standard_library_use = "allow"
+mixed_table = "allow"
+unused_variable = "warn"

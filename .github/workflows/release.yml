@@ -1,0 +1,21 @@
+name: "release"
+on:
+  push:
+    tags:
+      - "*"
+jobs:
+  luarocks-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: LuaRocks Upload
+        uses: nvim-neorocks/luarocks-tag-release@v5
+        env:
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+        with:
+          summary: |
+            A code snapshot plugin using freeze.
+          detailed_description: |
+            This plugin allows you to take a "screenshot" of your code,
+            thanks to freeze by charm.sh.
+          licence: "MIT/X11"

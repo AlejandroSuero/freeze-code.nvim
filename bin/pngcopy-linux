@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+
+xclip -selection clipboard -t image/png -i "$@"

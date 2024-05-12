@@ -1,0 +1,18 @@
+{
+  "default": true,
+  "MD033": false,
+  "MD052": false,
+  "MD041": false,
+  "MD004": {
+    "style": "dash"
+  },
+  "MD046": {
+    "style": "fenced"
+  },
+  "MD030": {
+    "ul_single": 1,
+    "ol_single": 1,
+    "ul_multi": 1,
+    "ol_multi": 1
+  }
+}
