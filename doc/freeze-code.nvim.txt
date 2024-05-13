@@ -1,4 +1,4 @@
-*freeze-code.nvim.txt*       For Neovim >= 0.8.0      Last change: 2024 May 12
+*freeze-code.nvim.txt*       For Neovim >= 0.8.0      Last change: 2024 May 13
 
 ==============================================================================
 Table of Contents                         *freeze-code.nvim-table-of-contents*
