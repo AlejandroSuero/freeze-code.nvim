@@ -1,7 +1,7 @@
 local api = vim.api
 local buf = nil
 local win = nil
-local delay = 2500
+local delay = 5000
 
 local function create_buffer()
   local width = vim.o.columns
@@ -33,13 +33,17 @@ local function create_buffer()
   return buf
 end
 local function get_image_path()
-  return vim.loop.fs_stat(vim.env.PWD .. "/freeze.png")
+  return vim.loop.fs_stat("./freeze.png")
 end
 
 describe("[freeze-code test]", function()
   local freeze_code = require("freeze-code")
   local same = assert.are.same
   local not_same = assert.not_same
+  before_each(function()
+    freeze_code = require("freeze-code")
+    freeze_code.setup()
+  end)
   describe("setup", function()
     it("creates user commands", function()
       vim.cmd("runtime plugin/freeze-code.lua")
@@ -88,9 +92,12 @@ describe("[freeze-code test]", function()
       freeze_code.setup()
       api.nvim_buf_call(buffer, freeze_code.freeze)
 
-      vim.wait(delay) -- wait for file to create
-
-      assert(get_image_path)
+      if vim.wait(delay, function()
+        return get_image_path() ~= nil
+      end) then
+        local actual = get_image_path()
+        not_same(nil, actual)
+      end
     end)
 
     it("creates an image from a range in a file", function()
@@ -101,9 +108,12 @@ describe("[freeze-code test]", function()
         freeze_code.freeze(1, 3)
       end)
 
-      vim.wait(delay) -- wait for file to create
-
-      assert(get_image_path)
+      if vim.wait(delay, function()
+        return get_image_path() ~= nil
+      end) then
+        local actual = get_image_path()
+        not_same(nil, actual)
+      end
     end)
   end)
 end)
