@@ -54,17 +54,11 @@ jobs:
 
       - name: Install Luarocks on Ubuntu and MacOS
         uses: leafo/gh-actions-luarocks@v4
-
-      - name: Run test with vusted
-        shell: bash
-        run: |
-          luarocks install vusted
-          nvim --version
-          make test
         if: ${{ runner.os }} != "Windows"
 
       - name: Install Luarocks on Ubuntu and MacOS
         uses: hishamhm/gh-actions-luarocks@d7d707a17da0e25dd2c9f79b979116b228d627ce # Until windows support is available
+        if: ${{ runner.os }} == "Windows"
 
       - name: Run test with vusted
         shell: bash
@@ -72,4 +66,11 @@ jobs:
           luarocks install vusted
           nvim --version
           make test
-        if: ${{ runner.os }} == "Windows"
+
+
+      - name: Run test with vusted
+        shell: pwsh
+        run: |
+          luarocks install vusted
+          nvim --version
+          make test
