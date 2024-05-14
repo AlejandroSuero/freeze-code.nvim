@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - "lua/**/*.lua"
-      - "tests/**/**.lua"
+      - "lua/**"
+      - "tests/**"
   pull_request:
     branches:
       - main
     paths:
-      - "lua/**/*.lua"
-      - "tests/**/**.lua"
+      - "lua/**"
+      - "tests/**"
 
 jobs:
   lint:
