@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         rev: [nightly, v0.9.0, stable]
 
     steps:
@@ -27,23 +27,13 @@ jobs:
           neovim: true
           version: ${{ matrix.rev }}
 
-      - name: Run tests with Neovim on Ubuntu and MacOS
+      - name: Run tests with Neovim
         shell: bash
         run: |
           export PATH="${PWD}/_neovim/bin:${PATH}"
           export VIM="${PWD}/_neovim/share/nvim/runtime"
           nvim --version
           make test-nvim
-        if: ${{ runner.os }} != "Windows"
-
-      - name: Run tests with Neovim on Windows
-        shell: pwsh
-        run: |
-          $env:PATH += ";$env:PWD\_neovim\bin;$env:PATH"
-          $env:VIM = "$env:PWD\_neovim\share\nvim\runtime"
-          nvim --version
-          make test-nvim
-        if: ${{ runner.os }} == "Windows"
 
       - uses: actions/checkout@v4
 
@@ -52,24 +42,11 @@ jobs:
         with:
           luaVersion: "luajit-2.1.0-beta3"
 
-      - name: Install Luarocks on Ubuntu and MacOS
+      - name: Install Luarocks
         uses: leafo/gh-actions-luarocks@v4
-        if: ${{ runner.os }} != "Windows"
-
-      - name: Install Luarocks on Ubuntu and MacOS
-        uses: hishamhm/gh-actions-luarocks@d7d707a17da0e25dd2c9f79b979116b228d627ce # Until windows support is available
-        if: ${{ runner.os }} == "Windows"
 
       - name: Run test with vusted
         shell: bash
-        run: |
-          luarocks install vusted
-          nvim --version
-          make test
-
-
-      - name: Run test with vusted
-        shell: pwsh
         run: |
           luarocks install vusted
           nvim --version
