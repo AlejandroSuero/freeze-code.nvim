@@ -2,6 +2,9 @@
 
 <div align="center">
 
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
 # Freeze NeoVim Plugin
 
 Take a "screenshot" of your code by turning it into an image, thanks to
@@ -9,6 +12,8 @@ Take a "screenshot" of your code by turning it into an image, thanks to
 
 [Report an issue](https://github.com/AlejandroSuero/freeze-code.nvim/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=%5BBug%5D%3A+)
 · [Suggest a feature](https://github.com/AlejandroSuero/freeze-code.nvim/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=%5BFeat%5D%3A+)
+
+**Remember to always follow the [code of conduct](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct)**
 
 </div>
 
@@ -60,6 +65,7 @@ return {
 ```
 
 > [!note]
+>
 > See default configuration below.
 
 ```lua
@@ -78,6 +84,7 @@ local opts = {
 ```
 
 > [!note]
+>
 > The commands to copy, as defaults per OS will be in the
 > [bin-directory](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/bin)
 
@@ -106,8 +113,13 @@ Any contribution is welcomed!
 7. Open a [PR](https://github.com/AlejandroSuero/freeze-code.nvim/pulls).
 
 For more information, check
-[CONTRIBUTING.md](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/contrib/CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/CONTRIBUTING.md).
 
 <div align="right">
   (<a href="#readme-top">Back to top</a>)
 </div>
+
+[stars-shield]: https://img.shields.io/github/stars/AlejandroSuero/freeze-code.nvim.svg?style=for-the-badge
+[stars-url]: https://github.com/AlejandroSuero/freeze-code.nvim/stargazers
+[issues-shield]: https://img.shields.io/github/issues/AlejandroSuero/freeze-code.nvim.svg?style=for-the-badge
+[issues-url]: https://github.com/AlejandroSuero/freeze-code.nvim/issues

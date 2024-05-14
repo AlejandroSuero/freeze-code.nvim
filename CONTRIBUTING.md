@@ -2,6 +2,9 @@
 
 Welcome everyone and thank you for wanting to contribute to this project.
 
+I hope that everyone here, **remembers to always follow the
+[code of conduct](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct)**.
+
 ## Dependencies
 
 This project uses [selene](https://github.com/Kampfkarren/selene) as the
