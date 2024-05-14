@@ -7,10 +7,15 @@ on:
     paths:
       - "README.md"
 
+permissions:
+  actions: write
+  contents: write
+
 jobs:
   docs:
     runs-on: ubuntu-latest
     permissions:
+      actions: write
       contents: write
     steps:
       - uses: actions/checkout@v4
