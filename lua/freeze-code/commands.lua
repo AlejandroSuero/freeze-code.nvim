@@ -1,6 +1,8 @@
 local M = {}
 
-local os_utils = require("freeze-code.utils").os
+local utils = require("freeze-code.utils")
+local logger = utils.logger
+local os_utils = utils.os
 local is_win = os_utils.is_win
 local is_macos = os_utils.is_macos
 -- local is_unix = os_utils.is_unix
@@ -53,7 +55,7 @@ end
 ---The function called on exit of from the event loop
 ---@param msg string: Message to display if success
 ---@return function cb: Schedule wrap callback function
-function M.on_exit(msg)
+function M.on_exit(msg, opts)
   local freeze_code = require("freeze-code")
   return vim.schedule_wrap(function(code, _)
     if code == 0 then
@@ -63,6 +65,12 @@ function M.on_exit(msg)
     end
     if freeze_code.config.copy == true then
       freeze_code.copy(freeze_code.config)
+    end
+    if opts and opts.freeze then
+      vim.wait(5000, function()
+        local image_path = vim.loop.fs_fstat(opts.freeze.output)
+        return image_path ~= nil
+      end)
     end
     stop_job()
   end)
@@ -84,11 +92,9 @@ end
 ---@return boolean success: true if executes, false otherwise
 function M.check_executable(cmd, path_to_check)
   if vim.fn.executable(cmd) == 0 then
-    vim.api.nvim_err_write(
-      string.format(
-        "[freeze-code] could not execute `" .. cmd .. "` binary in path=%s . make sure you have the right config",
-        path_to_check
-      )
+    logger.err_fmt(
+      "[freeze-code] could not execute `" .. cmd .. "` binary in path=`%s` . make sure you have the right config",
+      path_to_check
     )
     return false
   end
@@ -113,7 +119,10 @@ local copy_by_os = function(opts)
     return os.execute(cmd)
   end
   cmd = "sh " .. binaries.linux .. " " .. opts.output
-  os.execute(cmd)
+  local ok = os.execute(cmd)
+  if ok then
+    logger.info_fmt("[freeze-code] image `%s` copied to the clipboard", opts.output)
+  end
 end
 
 M.copy = function(opts)

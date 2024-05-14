@@ -6,59 +6,21 @@ on:
       - main
 
 jobs:
-  vusted:
-    name: Run Test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        nvim-versions: ["stable", "nightly"]
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: LuaJIT
-        uses: leafo/gh-actions-lua@v10
-        with:
-          luaVersion: "luajit-2.1.0-beta3"
-
-      - name: Luarocks
-        uses: leafo/gh-actions-luarocks@v4
-
-      - name: Run test with vusted
-        shell: bash
-        run: |
-          luarocks install vusted
-          make test
-
   run_tests:
     name: unit tests
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-22.04
-            rev: nightly/nvim-linux64.tar.gz
-          - os: ubuntu-22.04
-            rev: stable/nvim-linux64.tar.gz
-          - os: ubuntu-22.04
-            rev: v0.8.3/nvim-linux64.tar.gz
-          - os: ubuntu-22.04
-            rev: v0.9.1/nvim-linux64.tar.gz
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        rev: [nightly, v0.9.0, stable]
+
     steps:
-      - uses: actions/checkout@v3
-      - run: date +%F > todays-date
-      - name: Restore cache for today's nightly.
-        uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: rhysd/action-setup-vim@v1
         with:
-          path: _neovim
-          key: |
-            ${{ runner.os }}-${{ matrix.rev }}-${{ hashFiles('todays-date') }}
-      - name: Prepare
-        run: |
-          test -d _neovim || {
-            mkdir -p _neovim
-            curl -sL "https://github.com/neovim/neovim/releases/download/${{ matrix.rev }}" | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
-          }
+          neovim: true
+          version: ${{ matrix.rev }}
 
       - name: Run tests with NeoVim
         run: |
@@ -66,3 +28,20 @@ jobs:
           export VIM="${PWD}/_neovim/share/nvim/runtime"
           nvim --version
           make test-nvim
+
+      - uses: actions/checkout@v4
+
+      - name: Install LuaJIT
+        uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: "luajit-2.1.0-beta3"
+
+      - name: Install Luarocks
+        uses: leafo/gh-actions-luarocks@v4
+
+      - name: Run test with vusted
+        shell: bash
+        run: |
+          luarocks install vusted
+          nvim --version
+          make test

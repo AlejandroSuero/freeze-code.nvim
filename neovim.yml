@@ -2,6 +2,8 @@
 base: lua51
 
 globals:
+  jit:
+    any: true
   vim:
     any: true
   assert:

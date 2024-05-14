@@ -17,6 +17,16 @@ Take a "screenshot" of your code by turning it into an image, thanks to
 Using your plugin manager at your disposal, in the example
 [lazy](https://github.com/folke/lazy.nvim) is going to be used.
 
+> [!note]
+>
+> If you don't have [freeze](https://github.com/charmbracelet/freeze) installed,
+> and you are have [golang](https://go.dev) installed, it will
+> `go install github.com/charmbracelet/freeze@latest` for you 🫡.
+>
+> In the case that you don't have neither of those, don't you worry 😉, we got you
+> cover. It will install `freeze` using `cURL` to the
+> [freeze's releases page](https://github.com/charmbracelet/freeze/releases).
+
 - Default installation:
 
 ```lua
@@ -27,6 +37,14 @@ return {
     end,
 }
 ```
+
+> [!note]
+>
+> You can also install it using [Rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim)
+>
+> `:Rocks install freeze-code.nvim`
+>
+> Also as `luarocks install freeze-code.nvim`
 
 - Customizable installation:
 
@@ -45,27 +63,13 @@ return {
 > See default configuration below.
 
 ```lua
----@class FreezeConfig
----@field output string|"freeze.png": Freeze output filename `--output "freeze.png"`
----@field theme string|"default": Freeze theme `--theme "default"`
----@field config string|"base": Freeze configuration `--config "base"`
-
----@class CodeSnapshotConfig
----@field freeze_path string: Path to `freeze` executable
----@field copy_cmd string: Path to copy `image/png` to clipboard command
----@field copy boolean: Open image after creation option
----@field open boolean: Open image after creation option
----@field dir string: Directory to create image
----@field freeze_config FreezeConfig
-
----@type CodeSnapshotConfig
 local opts = {
   freeze_path = vim.fn.exepath("freeze"), -- where is freeze installed
   copy_cmd = "pngcopy", -- the default copy commands are in the bin directory
-  copy = false,
-  open = false,
-  dir = vim.env.PWD,
-  freeze_config = {
+  copy = false, -- copy after screenshot option
+  open = false, -- open after screenshot option
+  dir = vim.env.PWD, -- where is the image going to be saved "." as default
+  freeze_config = { -- configuration options for `freeze` command
     output = "freeze.png",
     config = "base",
     theme = "default",
