@@ -89,14 +89,14 @@ BREAKING CHANGE: refactor to use neovim's API supported only in v0.9 or higher
 
 - **Create a Pull Request (PR)**: Once you pushed your changes, make a pull request
   so we can see the changes and discuss over it if necessary. A clear description
-  of the changes is allways welcomed.
+  of the changes is always welcomed.
 
 ## Good practices
 
 - **Check for open issues**: Duplicated issues are never good.
 
 - **Check for open PRs**: Make sure there isn't another PR open tackling a similar
-  issue or creating a similar feature. You can allways help in an open PR.
+  issue or creating a similar feature. You can always help in an open PR.
 
 - **Descriptive and concised commits**: [conventional commit messages](https://www.conventionalcommits.org/en/v1.0.0).
 

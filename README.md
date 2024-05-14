@@ -93,7 +93,7 @@ local opts = {
 > [bin-directory](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/bin)
 
 Once you have it installed, you can use `:checkhealt freeze-code` to see if there
-are any problems with the installation or you need to install aditional tools.
+are any problems with the installation or you need to install additional tools.
 
 <div align="right">
   (<a href="#readme-top">Back to top</a>)

@@ -143,7 +143,7 @@ local optional_dependencies = {
 
 ---Check if the package is needed by the platorm
 ---@param pkg FreezeCodeHealthPackage
----@retur boolean
+---@return boolean
 local check_platform_needed = function(pkg)
   if pkg.platform == "windows" then
     return is_win
@@ -232,10 +232,10 @@ M.check = function()
         end
       else
         if version ~= "not needed" then
-          version = version == "" and "(unkown)" or version
+          version = version == "" and "(unknown)" or version
           local eol = version:find("\n")
           if eol == nil then
-            version = "(unkown)"
+            version = "(unknown)"
           else
             version = version:sub(0, eol - 1)
           end
