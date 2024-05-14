@@ -27,12 +27,23 @@ jobs:
           neovim: true
           version: ${{ matrix.rev }}
 
-      - name: Run tests with NeoVim
+      - name: Run tests with Neovim on Ubuntu and MacOS
+        shell: bash
         run: |
           export PATH="${PWD}/_neovim/bin:${PATH}"
           export VIM="${PWD}/_neovim/share/nvim/runtime"
           nvim --version
           make test-nvim
+        if: runner.os != "Windows"
+
+      - name: Run tests with Neovim on Windows
+        shell: cmd
+        run: |
+          SET PATH="${PWD}/_neovim/bin;${PATH}"
+          SET VIM="${PWD}/_neovim/share/nvim/runtime"
+          nvim --version
+          make test-nvim
+        if: runner.os == "Windows"
 
       - uses: actions/checkout@v4
 
