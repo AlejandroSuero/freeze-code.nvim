@@ -178,15 +178,18 @@ freeze_code.agnostic_install_freeze = function(opts)
     return
   end
 
-  local install_path = opts.install_path
+  local install_path = vim.fn.expand(opts.install_path)
   if install_path == "" then
-    install_path = "~/.local/bin"
+    install_path = vim.fn.expand("~/.local/bin")
   end
   local output_filename = "freeze.tar.gz"
   local download_command = { "curl", "-sL", "-o", output_filename, release_url }
   local extract_command = { "tar", "-zxf", output_filename, "-C", install_path }
+  -- vim.loop.spawn("rm", { args = { "-rf", install_path .. "/" .. get_freeze_filename() } })
+  local rm_command_args = { "-rf", install_path .. "/" .. get_freeze_filename() }
   if os_name == "Windows" then
     extract_command = { "Expand-Archive", output_filename, install_path }
+    rm_command_args = { "-r", "-Force", install_path .. "/" .. get_freeze_filename() }
   end
   local binary_path = vim.fn.expand(table.concat({ install_path, get_freeze_filename() .. "/freeze" }, "/"))
 
@@ -236,7 +239,7 @@ freeze_code.agnostic_install_freeze = function(opts)
       opts._installed = true
       opts.install_path = install_path
       freeze_code.setup(opts)
-      vim.loop.spawn("rm", { args = { "-rf", install_path .. "/" .. get_freeze_filename() } })
+      vim.loop.spawn("rm", { args = rm_command_args })
       logger.warn_fmt("[freeze-code] `freeze` binary installed in installed in path=%s", freeze_code.config.freeze_path)
       freeze_code.setup(opts)
       create_autocmds()

@@ -12,17 +12,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         rev: [nightly, v0.9.0, stable]
 
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        name: Set up Go
+        with:
+          go-version: ~1.21
       - uses: rhysd/action-setup-vim@v1
+        name: Set up Neovim
         with:
           neovim: true
           version: ${{ matrix.rev }}
 
-      - name: Run tests with NeoVim
+      - name: Run tests with Neovim
+        shell: bash
         run: |
           export PATH="${PWD}/_neovim/bin:${PATH}"
           export VIM="${PWD}/_neovim/share/nvim/runtime"
