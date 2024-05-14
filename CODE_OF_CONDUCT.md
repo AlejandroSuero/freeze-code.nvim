@@ -1,5 +1,11 @@
 # Contributor Covenant Code of Conduct
 
+**Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at <asuerome+freezecode@gmail.com>**.
+
+In the event that your report includes one of the people mentioned above please feel free to reach out to one of the other people listed instead.
+
+Followed is an unmodified [Contributor Covenant Code of Conduct 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our
