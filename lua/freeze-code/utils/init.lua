@@ -7,7 +7,7 @@
 
 ---@class FreezeCodeUtils
 ---@field logger FreezeCodeLogger
----@fiels os FreezeCodeOS
+---@field os FreezeCodeOS
 ---@type FreezeCodeUtils|{}
 local M = {}
 

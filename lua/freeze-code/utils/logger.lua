@@ -1,7 +1,7 @@
 ---@meta
 
 ---@brief [[
---- Provides `loggin` functions to display messages.
+--- Provides `logging` functions to display messages.
 ---@brief ]]
 
 ---@class FreezeCodeLogger

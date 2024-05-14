@@ -33,4 +33,12 @@ format:
 	@$(call style_calls,"Running stylua format")
 	@stylua --color always -f ./stylua.toml lua/freeze-code
 
+spell:
+	@$(call style_calls,"Running codespell check")
+	@codespell --quiet-level=2 --check-hidden --skip=./.git .
+
+spell-write:
+	@$(call style_calls,"Running codespell write")
+	@codespell --quiet-level=2 --check-hidden --skip=./.git --write-changes .
+
 all: test test-nvim lint
