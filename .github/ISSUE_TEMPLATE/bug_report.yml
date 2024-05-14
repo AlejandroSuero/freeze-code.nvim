@@ -17,7 +17,8 @@ body:
     id: pre-requisites
     attributes:
       label: Pre-requisites
-      description: Make sure to check to see if you are following this requisites.
+      description: |
+          Make sure to check to see if you are following this requisites.
       options:
         - label: The issue is reproducible
           required: true
@@ -75,7 +76,8 @@ body:
     id: issue-behaviour
     attributes:
       label: Behaviour
-      description: Describe the current behaviour. May include logs, images, videos ...
+      description: |
+        Describe the current behaviour. May include logs, images, videos ...
     validations:
       required: true
 
@@ -127,3 +129,12 @@ body:
         })
     validations:
       required: true
+
+  - type: checkboxes
+    attributes:
+      label: Code of conduct agreement
+      description: |
+        By checking this I agree to [CODE OF CONDUCT](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct).
+      options:
+        - label: I agree and I am not violating the [CODE OF CONDUCT](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct)
+          required: true

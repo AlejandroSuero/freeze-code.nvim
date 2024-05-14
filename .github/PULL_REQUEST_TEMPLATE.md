@@ -34,3 +34,5 @@ instructions so we can reproduce. Please also list relevant details about your c
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation
+- [ ] I did read the [CODE OF CONDUCT](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct)
+  and I **agree to follow it**.
