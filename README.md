@@ -5,7 +5,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 
-# Freeze NeoVim Plugin
+# Freeze Neovim Plugin
 
 Take a "screenshot" of your code by turning it into an image, thanks to
 [freeze](https://github.com/charmbracelet/freeze) by [charm](https://charm.sh/).
@@ -16,6 +16,10 @@ Take a "screenshot" of your code by turning it into an image, thanks to
 **Remember to always follow the [code of conduct](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct)**
 
 </div>
+
+> [!warning]
+>
+> This plugin requires Neovim v0.9.0 or higher
 
 ## Installation
 
