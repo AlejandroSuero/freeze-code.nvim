@@ -1,5 +1,12 @@
 if vim.fn.has("nvim-0.9.0") ~= 1 then
-  vim.api.nvim_err_writeln("[freeze-code] plugin requires at least NeoVim 0.9.0.")
+  local current_version = vim.version()
+  local err_msg = string.format(
+    "[freeze-code] plugin requires at least NeoVim v0.9.0, current version: v%s.%s.%s",
+    current_version.major,
+    current_version.minor,
+    current_version.patch
+  )
+  vim.api.nvim_err_writeln(err_msg)
   return
 end
 
