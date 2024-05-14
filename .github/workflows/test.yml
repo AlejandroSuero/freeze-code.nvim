@@ -34,7 +34,7 @@ jobs:
           export VIM="${PWD}/_neovim/share/nvim/runtime"
           nvim --version
           make test-nvim
-        if: runner.os != "Windows"
+        if: ${{ runner.os }} != "Windows"
 
       - name: Run tests with Neovim on Windows
         shell: pwsh
@@ -43,7 +43,7 @@ jobs:
           $env:VIM = "$env:PWD\_neovim\share\nvim\runtime"
           nvim --version
           make test-nvim
-        if: runner.os == "Windows"
+        if: ${{ runner.os }} == "Windows"
 
       - uses: actions/checkout@v4
 
