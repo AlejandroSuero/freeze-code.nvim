@@ -37,10 +37,10 @@ jobs:
         if: runner.os != "Windows"
 
       - name: Run tests with Neovim on Windows
-        shell: cmd
+        shell: pwsh
         run: |
-          SET PATH="${PWD}/_neovim/bin;${PATH}"
-          SET VIM="${PWD}/_neovim/share/nvim/runtime"
+          $env:PATH = "$env:PWD\_neovim\bin;$env:PATH"
+          $env:VIM = "$env:PWD\_neovim\share\nvim\runtime"
           nvim --version
           make test-nvim
         if: runner.os == "Windows"
