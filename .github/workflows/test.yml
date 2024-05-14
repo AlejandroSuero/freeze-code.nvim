@@ -39,7 +39,7 @@ jobs:
       - name: Run tests with Neovim on Windows
         shell: pwsh
         run: |
-          $env:PATH = "$env:PWD\_neovim\bin;$env:PATH"
+          $env:PATH += ";$env:PWD\_neovim\bin;$env:PATH"
           $env:VIM = "$env:PWD\_neovim\share\nvim\runtime"
           nvim --version
           make test-nvim
