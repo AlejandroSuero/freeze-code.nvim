@@ -1,6 +1,11 @@
 name: docs
 
-on: ["push", "pull_request"]
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "README.md"
 
 jobs:
   docs:
