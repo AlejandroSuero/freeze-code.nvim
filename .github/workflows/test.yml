@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - "lua/**"
+      - "tests/**"
 
 jobs:
   run_tests:
