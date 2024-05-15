@@ -6,11 +6,6 @@ on:
       - main
     paths:
       - "README.md"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "README.md"
 
 jobs:
   docs:
