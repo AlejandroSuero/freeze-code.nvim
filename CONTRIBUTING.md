@@ -17,6 +17,12 @@ cargo install stylua
 luarocks --lua-version=5.1 install vusted
 ```
 
+> [!warning]
+>
+> In **CI** we will be using [codespell](https://github.com/codespell-project/codespell)
+> to check that all is correctly spelled, you can use `make spell` to check it
+> locally and `make spell-write` to perform fixable changes automatically.
+
 ## How to contribute
 
 1. **Configure the development**
@@ -50,6 +56,10 @@ luarocks --lua-version=5.1 install vusted
   with a descriptive and concise message. Following the standards like in the
   [Neovim repo](https://github.com/neovim/neovim/blob/master/CONTRIBUTING.md#commit-messages),
   [conventional commit guidelines](https://www.conventionalcommits.org/en/v1.0.0).
+
+> [!caution]
+>
+> The commits will be linted on every push.
 
 ```COMMITMSG
 type(scope): subject
