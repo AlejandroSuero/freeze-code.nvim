@@ -1,12 +1,6 @@
 name: lint
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "lua/**"
-      - "tests/**"
   pull_request:
     branches:
       - main
