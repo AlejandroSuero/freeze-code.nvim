@@ -109,34 +109,53 @@ local optional_dependencies = {
   {
     cmd_name = "Add-Type",
     package = {
-      name = "powershell",
-      cmd = { "pwsh" },
-      args = { "--version" },
-      url = "[PowerShell/PowerShell](https://github.com/PowerShell/PowerShell)",
-      optional = true,
-      platform = "windows",
+      {
+        name = "powershell",
+        cmd = { "pwsh" },
+        args = { "--version" },
+        url = "[PowerShell/PowerShell](https://github.com/PowerShell/PowerShell)",
+        optional = true,
+        platform = "windows",
+      },
+    },
+  },
+  {
+    cmd_name = "Clipboard",
+    package = {
+      {
+        name = "gclip",
+        cmd = { "gclip" },
+        args = nil,
+        url = "[golang-design/clipboard](https://github.com/golang-design/clipboard)",
+        optional = true,
+        platform = "all",
+      },
     },
   },
   {
     cmd_name = "open",
     package = {
-      name = "open",
-      cmd = { "open" },
-      args = nil,
-      url = "[docs](https://www.man7.org/linux/man-pages/man2/open.2.html)",
-      optional = true,
-      platform = "linux",
+      {
+        name = "open",
+        cmd = { "open" },
+        args = nil,
+        url = "[docs](https://www.man7.org/linux/man-pages/man2/open.2.html)",
+        optional = true,
+        platform = "linux",
+      },
     },
   },
   {
     cmd_name = "explorer",
     package = {
-      name = "explorer",
-      cmd = { "explorer" },
-      args = nil,
-      url = "[docs](https://devblogs.microsoft.com/scripting/use-powershell-to-work-with-windows-explorer/)",
-      optional = true,
-      platform = "windows",
+      {
+        name = "explorer",
+        cmd = { "explorer" },
+        args = nil,
+        url = "[docs](https://devblogs.microsoft.com/scripting/use-powershell-to-work-with-windows-explorer/)",
+        optional = true,
+        platform = "windows",
+      },
     },
   },
 }
@@ -167,6 +186,7 @@ end
 ---@return string|any
 ---@return boolean needed
 local check_binary_installed = function(pkg)
+  print(vim.inspect(pkg))
   local needed = check_platform_needed(pkg)
   local cmd = pkg.cmd or { pkg.name }
   for _, binary in ipairs(cmd) do

@@ -140,6 +140,7 @@ freeze_code.go_install_freeze = function(opts)
     "github.com/charmbracelet/freeze@latest",
   }
   local stdio = { stdout = "", stderr = "" }
+  local job = nil
 
   local function on_output(err, data)
     if err then
@@ -161,9 +162,10 @@ freeze_code.go_install_freeze = function(opts)
       freeze_code.setup(opts)
       logger.warn("[freeze-code] go install github.com/charmbracelet/freeze@latest completed")
       create_autocmds()
+      vim.fn.jobstop(job)
     end),
   }
-  vim.fn.jobstart(cmd_args, callbacks)
+  job = vim.fn.jobstart(cmd_args, callbacks)
 end
 
 ---@class FreezeCode
@@ -201,11 +203,12 @@ freeze_code.agnostic_install_freeze = function(opts)
   if vim.fn.filereadable(binary_path) == 1 then
     local success = vim.loop.fs_unlink(binary_path)
     if not success then
-      logger.err("[freeze-code] ERROR: `freeze` binary could not be removed!")
+      logger.err("[freeze-code.nvim] ERROR: `freeze` binary could not be removed!")
       return
     end
   end
   local stdio = { stdout = "", stderr = "" }
+  local job = nil
 
   local function on_output(err, data)
     if err then
@@ -223,13 +226,17 @@ freeze_code.agnostic_install_freeze = function(opts)
       on_output(out)
     end),
     on_exit = vim.schedule_wrap(function()
-      logger.info_fmt("[freeze-code] extracting release with `%s`", table.concat(extract_command, " "))
+      logger.info_fmt("[freeze-code.nvim] extracting release with `%s`", table.concat(extract_command, " "))
       vim.fn.system(extract_command)
+      if vim.v.shell_error ~= 0 then
+        logger.err("[freeze-code.nvim] ERROR: extracting release failed")
+        return
+      end
       -- remove the archive after completion
       if vim.fn.filereadable(output_filename) == 1 then
         local success = vim.loop.fs_unlink(output_filename)
         if not success then
-          logger.err("[freeze-code] ERROR: existing archive could not be removed")
+          logger.err("[freeze-code.nvim] ERROR: existing archive could not be removed")
           return
         end
       end
@@ -240,13 +247,17 @@ freeze_code.agnostic_install_freeze = function(opts)
       opts.install_path = install_path
       freeze_code.setup(opts)
       vim.loop.spawn("rm", { args = rm_command_args })
-      logger.warn_fmt("[freeze-code] `freeze` binary installed in installed in path=%s", freeze_code.config.freeze_path)
+      logger.warn_fmt(
+        "[freeze-code.nvim] `freeze` binary installed in installed in path=%s",
+        freeze_code.config.freeze_path
+      )
       freeze_code.setup(opts)
       create_autocmds()
+      vim.fn.jobstop(job)
     end),
   }
-  logger.info_fmt("[freeze-code] downloading release from `%s`", release_url)
-  vim.fn.jobstart(download_command, callbacks)
+  logger.info_fmt("[freeze-code.nvim] downloading release from `%s`", release_url)
+  job = vim.fn.jobstart(download_command, callbacks)
 end
 
 ---@class FreezeCode
@@ -255,11 +266,11 @@ end
 ---@param opts FreezeCodeConfig
 freeze_code.install_freeze = function(opts)
   if commands.check_executable("go", vim.fn.exepath("go")) then
-    logger.warn("[freeze-code] go install github.com/charmbracelet/freeze@latest completed")
+    logger.warn("[freeze-code.nvim] go install github.com/charmbracelet/freeze@latest completed")
     freeze_code.go_install_freeze(opts)
     return
   end
-  logger.info("[freeze-code] Installing info with `curl`")
+  logger.info("[freeze-code.nvim] Installing info with `curl`")
   freeze_code.agnostic_install_freeze(opts)
 end
 
@@ -270,7 +281,7 @@ end
 ---@param e_line? number: line to start range
 freeze_code.freeze = function(s_line, e_line)
   if not freeze_code.config._installed then
-    logger.warn("[freeze-code] `freeze` not installed")
+    logger.warn("[freeze-code.nvim] `freeze` not installed")
     freeze_code.install_freeze(freeze_code.config)
     return
   end
@@ -284,8 +295,14 @@ freeze_code.freeze = function(s_line, e_line)
     return
   end
 
-  local lang = vim.api.nvim_buf_get_option(0, "filetype")
-  local file = vim.api.nvim_buf_get_name(0)
+  local lang = ""
+  if vim.fn.has("nvim-0.10") == 1 then
+    lang = vim.api.nvim_get_option_value("filetype", { buf = vim.api.nvim_get_current_buf() })
+  else
+    ---@diagnostic disable-next-line: deprecated
+    lang = vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "filetype")
+  end
+  local file = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
   local conf = freeze_code.config.freeze_config.config
   local dir = freeze_code.config.dir
   local theme = freeze_code.config.freeze_config.theme

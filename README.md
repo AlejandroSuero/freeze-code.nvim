@@ -75,7 +75,7 @@ return {
 ```lua
 local opts = {
   freeze_path = vim.fn.exepath("freeze"), -- where is freeze installed
-  copy_cmd = "pngcopy", -- the default copy commands are in the bin directory
+  copy_cmd = "gclip", -- the default copy commands `gclip` or native to your OS (see below)
   copy = false, -- copy after screenshot option
   open = false, -- open after screenshot option
   dir = vim.env.PWD, -- where is the image going to be saved "." as default
@@ -89,8 +89,14 @@ local opts = {
 
 > [!note]
 >
-> The commands to copy, as defaults per OS will be in the
-> [bin-directory](https://github.com/AlejandroSuero/freeze-code.nvim/blob/main/bin)
+> The default command will be [gclip](https://github.com/golang-design/clipboard)
+> if it is installed, otherwise ...
+>
+> The commands to copy, as defaults per OS will be, for example, for Windows:
+> `Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.Clipboard]::SetImage(...)`,
+> for Linux: `xclip -selection clipboard -t image/png ...` if is an `X11` session,
+> `wl-copy < ...` if is a `Wayland` session, and for MacOS:
+> `osascript -e 'to set the clipboard to (read (POSIX file "...") as «class PNGf»)'`.
 
 Once you have it installed, you can use `:checkhealt freeze-code` to see if there
 are any problems with the installation or you need to install additional tools.

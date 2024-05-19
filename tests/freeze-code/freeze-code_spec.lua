@@ -25,9 +25,15 @@ local function create_buffer()
   buf = api.nvim_create_buf(false, true)
   win = api.nvim_open_win(buf, true, win_opts)
 
-  api.nvim_win_set_option(win, "winblend", 0)
-  api.nvim_buf_set_option(buf, "bufhidden", "wipe")
-  api.nvim_buf_set_option(buf, "filetype", "typescript")
+  if vim.fn.has("nvim-0.10") == 1 then
+    api.nvim_set_option_value("winblend", 0, { scope = "local" })
+    api.nvim_set_option_value("bufhidden", "wipe", { scope = "local" })
+    api.nvim_set_option_value("filetype", "typescript", { scope = "local" })
+  else
+    api.nvim_win_set_option(win, "winblend", 0)
+    api.nvim_buf_set_option(buf, "bufhidden", "wipe")
+    api.nvim_buf_set_option(buf, "filetype", "typescript")
+  end
   api.nvim_buf_set_name(buf, "testing.ts")
 
   return buf
