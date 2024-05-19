@@ -14,9 +14,9 @@ local M = {}
 M.logger = require("freeze-code.utils.logger")
 
 M.os = {
-  is_win = vim.api.nvim_call_function("has", { "win32" }) == 1,
-  is_macos = vim.api.nvim_call_function("has", { "macunix" }) == 1,
-  is_unix = vim.api.nvim_call_function("has", { "unix" }) == 1,
+  is_win = vim.loop.os_uname().version:match("Windows"),
+  is_macos = vim.loop.os_uname().version:match("Darwin"),
+  is_unix = vim.loop.os_uname().version:match("Linux"),
 }
 
 return M

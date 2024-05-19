@@ -5,22 +5,7 @@ local logger = utils.logger
 local os_utils = utils.os
 local is_win = os_utils.is_win
 local is_macos = os_utils.is_macos
--- local is_unix = os_utils.is_unix
-
-local tmp_freeze_path = "/tmp/freeze-code.nvim"
-
-local setup_bin_path = function()
-  if not vim.loop.fs_stat(tmp_freeze_path) then
-    vim.fn.system({
-      "git",
-      "clone",
-      "--filter=blob:none",
-      "https://github.com/AlejandroSuero/freeze-code.nvim.git",
-      "--branch=main", -- latest stable release
-      tmp_freeze_path,
-    })
-  end
-end
+local is_unix = os_utils.is_unix
 
 M.job = {}
 
@@ -59,7 +44,7 @@ function M.on_exit(msg, opts)
   local freeze_code = require("freeze-code")
   return vim.schedule_wrap(function(code, _)
     if code == 0 then
-      vim.notify("[freeze-code] " .. msg, vim.log.levels.INFO, { title = "FreezeCode" })
+      vim.notify("[freeze-code.nvim] " .. msg, vim.log.levels.INFO, { title = "FreezeCode" })
     else
       vim.notify(M.stdio.stdout, vim.log.levels.ERROR, { title = "Freeze" })
     end
@@ -102,38 +87,44 @@ function M.check_executable(cmd, path_to_check)
 end
 
 local copy_by_os = function(opts)
-  setup_bin_path()
-  local bin_path = tmp_freeze_path .. "/bin"
-  local binaries = {
-    macos = bin_path .. "/pngcopy-macos",
-    linux = bin_path .. "/pngcopy-linux",
-    windows = bin_path .. "/pngcopy-windows.ps1",
-  }
-
-  local cmd = ""
+  local cmd = {}
+  local filename = vim.fn.expand(opts.output)
+  if vim.fn.executable("gclip") == 0 then
+    cmd = { "gclip", "-copy", "-f", filename }
+    return vim.fn.system(table.concat(cmd, " "))
+  end
   if is_win then
-    cmd = "pwsh " .. binaries.windows .. " " .. opts.output
-    return os.execute(cmd)
+    cmd = {
+      "Add-Type",
+      "-AssemblyName",
+      "System.Windows.Forms",
+      ";",
+      "[Windows.Forms.Clipboard]::SetImage($[System.Drawing.Image]::FromFile(" .. filename .. "))",
+    }
   elseif is_macos then
-    cmd = "sh " .. binaries.macos .. " " .. opts.output
-    return os.execute(cmd)
+    cmd = {
+      "osascript",
+      "-e",
+      "'set the clipboard to (read (POSIX file \"" .. filename .. "\") as {«class PNGf»})'",
+    }
   end
-  cmd = "sh " .. binaries.linux .. " " .. opts.output
-  local ok = os.execute(cmd)
-  if ok then
-    logger.info_fmt("[freeze-code] image `%s` copied to the clipboard", opts.output)
+  if is_unix then
+    if vim.env.XDG_SESSION_TYPE == "x11" then
+      cmd = { "xclip", "-selection", "clipboard", "-t", "image/png", "-i", filename }
+    else
+      cmd = { "wl-copy", "<", filename }
+    end
   end
+  return vim.fn.system(table.concat(cmd, " "))
 end
 
 M.copy = function(opts)
   copy_by_os(opts)
-  local cmd = ""
-  if is_win then
-    cmd = "rm -r -Force " .. tmp_freeze_path
-  else
-    cmd = "rm -rf " .. tmp_freeze_path
+  if vim.v.shell_error ~= 0 then
+    logger.err_once("[freeze-code.nvim] error while copying image to clipboard")
+    return
   end
-  os.execute(cmd)
+  logger.info("[freeze-code.nvim] image copied to clipboard")
 end
 
 return M

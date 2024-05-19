@@ -118,6 +118,17 @@ local optional_dependencies = {
     },
   },
   {
+    cmd_name = "Clipboard",
+    package = {
+      name = "gclip",
+      cmd = { "gclip" },
+      args = nil,
+      url = "[golang-design/clipboard](https://github.com/golang-design/clipboard)",
+      optional = true,
+      platform = "all",
+    },
+  },
+  {
     cmd_name = "open",
     package = {
       name = "open",
