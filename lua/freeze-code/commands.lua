@@ -51,6 +51,9 @@ function M.on_exit(msg, opts)
     if freeze_code.config.copy == true then
       freeze_code.copy(freeze_code.config)
     end
+    if freeze_code.config.open == true then
+      freeze_code.open(freeze_code.config)
+    end
     if opts and opts.freeze then
       vim.wait(5000, function()
         local image_path = vim.loop.fs_fstat(opts.freeze.output)
@@ -125,6 +128,25 @@ M.copy = function(opts)
     return
   end
   logger.info("[freeze-code.nvim] image copied to clipboard")
+end
+
+local open_by_os = function(opts)
+  local cmd = {}
+  local filename = vim.fn.expand(opts.output)
+  if is_win then
+    cmd = { "explorer", filename }
+  else
+    cmd = { "open", filename }
+  end
+  return vim.fn.system(table.concat(cmd, " "))
+end
+
+M.open = function(opts)
+  open_by_os(opts)
+  if vim.v.shell_error ~= 0 then
+    logger.err_once("[freeze-code.nvim] error while opening image")
+    return
+  end
 end
 
 return M

@@ -54,6 +54,12 @@ freeze_code.copy = function(opts)
   commands.copy(opts)
 end
 
+---@class FreezeCode
+---@field open function: Opening image in default image viewer
+freeze_code.open = function(opts)
+  commands.open(opts)
+end
+
 local create_autocmds = function()
   vim.api.nvim_create_user_command("Freeze", function(opts)
     if opts.count > 0 then
