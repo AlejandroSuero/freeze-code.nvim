@@ -186,7 +186,6 @@ end
 ---@return string|any
 ---@return boolean needed
 local check_binary_installed = function(pkg)
-  print(vim.inspect(pkg))
   local needed = check_platform_needed(pkg)
   local cmd = pkg.cmd or { pkg.name }
   for _, binary in ipairs(cmd) do
