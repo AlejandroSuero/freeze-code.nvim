@@ -211,7 +211,9 @@ local check_binary_installed = function(pkg)
       if handle then
         binary_version = handle:read("*a")
         handle:close()
-        if
+        if binary_version:lower():find("built from source") then
+          return true, binary_version, needed
+        elseif
           binary_version:lower():find("illegal")
           or binary_version:lower():find("unknown")
           or binary_version:lower():find("invalid")
@@ -250,17 +252,15 @@ M.check = function()
           end
         end
       else
-        if version ~= "not needed" then
-          version = version == "" and "(unknown)" or version
-          local eol = version:find("\n")
-          if eol == nil then
-            version = "(unknown)"
-          else
-            version = version:sub(0, eol - 1)
-          end
-          local ok_msg = string.format("%s: found! version: `%s`", pkg.name, version)
-          report_ok(ok_msg)
+        version = version == "" and "(unknown)" or version
+        local eol = version:find("\n")
+        if eol == nil then
+          version = "(unknown)"
+        else
+          version = version:sub(0, eol - 1)
         end
+        local ok_msg = string.format("%s: found! version: `%s`", pkg.name, version)
+        report_ok(ok_msg)
       end
     end
   end
