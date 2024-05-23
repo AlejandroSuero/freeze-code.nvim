@@ -160,7 +160,7 @@ local optional_dependencies = {
   },
 }
 
----Check if the package is needed by the platorm
+---Check if the package is needed by the platform
 ---@param pkg FreezeCodeHealthPackage
 ---@return boolean
 local check_platform_needed = function(pkg)
