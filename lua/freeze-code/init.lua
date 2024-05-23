@@ -351,7 +351,6 @@ freeze_code.freeze = function(s_line, e_line)
       file,
     }
   end
-  print(vim.inspect(cmd_args))
 
   commands.job = {}
   commands.job.stdout = vim.loop.new_pipe(false)
