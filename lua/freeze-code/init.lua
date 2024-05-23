@@ -323,19 +323,35 @@ freeze_code.freeze = function(s_line, e_line)
 
   freeze_code.config.output = dir .. "/" .. output .. ".png"
 
-  local cmd_args = {
-    "--output",
-    freeze_code.config.output,
-    "--language",
-    lang,
-    "--lines",
-    s_line .. "," .. e_line,
-    "--config",
-    conf,
-    "--theme",
-    theme,
-    file,
-  }
+  local cmd_args = {}
+  if conf == "base" or conf == "full" then
+    cmd_args = {
+      "--output",
+      freeze_code.config.output,
+      "--language",
+      lang,
+      "--lines",
+      s_line .. "," .. e_line,
+      "--config",
+      conf,
+      "--theme",
+      theme,
+      file,
+    }
+  else
+    cmd_args = {
+      "--output",
+      freeze_code.config.output,
+      "--language",
+      lang,
+      "--lines",
+      s_line .. "," .. e_line,
+      "--config",
+      conf,
+      file,
+    }
+  end
+  print(vim.inspect(cmd_args))
 
   commands.job = {}
   commands.job.stdout = vim.loop.new_pipe(false)
