@@ -105,6 +105,24 @@ are any problems with the installation or you need to install additional tools.
   (<a href="#readme-top">Back to top</a>)
 </div>
 
+## Usage
+
+To use this plugin, simply call `:Freeze` and it will take a screenshot of the
+current buffer and save it in the `dir` path you have configured.
+
+If you want to take a screenshot of a specific line, you can use the `:Freeze` in
+visual mode, and it will take a screenshot of the selected lines.
+
+### Keymaps
+
+```lua
+vim.keymap.set("n", "<leader>fz", require("freeze-code").freeze)
+vim.keymap.set("v", "<leader>fz", function()
+  require("freeze-code").freeze(vim.fn.line("'<"), vim.fn.line("'>"))
+end)
+-- or using `<cmd>Freeze<cr>`
+```
+
 ## Contributing
 
 Thank you to everyone that is contributing and to those who want to contribute.
