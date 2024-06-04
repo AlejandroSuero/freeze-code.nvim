@@ -122,7 +122,7 @@ vim.keymap.set("v", "<leader>fz", function()
   fz_api.freeze(vim.fn.line("'<"), vim.fn.line("'>"))
 end)
 -- or using `<cmd>Freeze<cr>`
-vim.keymap.set("n", "<leader>fl",fz.freeze_line)
+vim.keymap.set("n", "<leader>fl", fz.freeze_line)
 -- or using `<cmd>FreezeLine<cr>`
 ```
 
