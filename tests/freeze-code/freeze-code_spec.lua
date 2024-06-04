@@ -43,29 +43,32 @@ local function get_image_path()
 end
 
 describe("[freeze-code test]", function()
+  local freeze_code_config = require("freeze-code.config")
+  local freeze_code_api = require("freeze-code.utils.api")
   local freeze_code = require("freeze-code")
   local same = assert.are.same
   local not_same = assert.not_same
   before_each(function()
+    freeze_code_config = require("freeze-code.config")
     freeze_code = require("freeze-code")
     freeze_code.setup()
   end)
   describe("setup", function()
     it("creates user commands", function()
       vim.cmd("runtime plugin/freeze-code.lua")
-      freeze_code.setup()
+      freeze_code_config.setup()
       local user_commands = api.nvim_get_commands({})
       not_same(nil, user_commands.Freeze)
     end)
 
     it("with default config", function()
-      local expected = require("freeze-code").config
+      local expected = require("freeze-code.config").config
       freeze_code.setup()
-      same(freeze_code.config, expected)
+      same(freeze_code_config.config, expected)
     end)
 
     it("with custom config", function()
-      local default_config = require("freeze-code").config
+      local default_config = require("freeze-code.config").config
       local opts = {
         copy = true,
         freeze_config = {
@@ -74,9 +77,9 @@ describe("[freeze-code test]", function()
       }
       local expected = vim.tbl_deep_extend("force", {}, default_config, opts or {})
       freeze_code.setup(expected)
-      same(freeze_code.config, expected)
-      same(freeze_code.config.copy, true)
-      same(freeze_code.config.freeze_config.theme, "rose-pine-moon")
+      same(freeze_code_config.config, expected)
+      same(freeze_code_config.config.copy, true)
+      same(freeze_code_config.config.freeze_config.theme, "rose-pine-moon")
     end)
   end)
 
@@ -96,7 +99,7 @@ describe("[freeze-code test]", function()
       local buffer = create_buffer()
 
       freeze_code.setup()
-      api.nvim_buf_call(buffer, freeze_code.freeze)
+      api.nvim_buf_call(buffer, freeze_code_api.freeze)
 
       if vim.wait(delay, function()
         return get_image_path() ~= nil
@@ -111,7 +114,7 @@ describe("[freeze-code test]", function()
 
       freeze_code.setup()
       api.nvim_buf_call(buffer, function()
-        freeze_code.freeze(1, 3)
+        freeze_code_api.freeze(1, 3)
       end)
 
       if vim.wait(delay, function()
