@@ -137,7 +137,7 @@ end
 function FreezeBinaryFetcher:install_freeze(opts)
   if u.check_executable("go", vim.fn.exepath("go")) then
     logger.warn("[freeze-code.nvim] go install github.com/charmbracelet/freeze@latest completed")
-    self:go_install_freeze(opts)
+    self:go_installation(opts)
     return
   end
   logger.info("[freeze-code.nvim] Installing info with `curl`")
