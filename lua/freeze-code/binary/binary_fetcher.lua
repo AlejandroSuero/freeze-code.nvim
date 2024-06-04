@@ -144,5 +144,4 @@ function FreezeBinaryFetcher:install_freeze(opts)
   self:agnostic_installation(opts)
 end
 
-
 return FreezeBinaryFetcher
