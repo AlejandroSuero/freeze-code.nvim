@@ -116,11 +116,13 @@ visual mode, and it will take a screenshot of the selected lines.
 ### Keymaps
 
 ```lua
-vim.keymap.set("n", "<leader>fz", require("freeze-code").freeze)
+vim.keymap.set("n", "<leader>fz", require("freeze-code.api").freeze)
 vim.keymap.set("v", "<leader>fz", function()
-  require("freeze-code").freeze(vim.fn.line("'<"), vim.fn.line("'>"))
+  require("freeze-code.api").freeze(vim.fn.line("'<"), vim.fn.line("'>"))
 end)
 -- or using `<cmd>Freeze<cr>`
+vim.keymap.set("n", "<leader>fl", require("freeze-code.api").freeze_line)
+-- or using `<cmd>FreezeLine<cr>`
 ```
 
 ## Contributing
