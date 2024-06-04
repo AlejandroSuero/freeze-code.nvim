@@ -41,18 +41,18 @@ end
 ---@param msg string: Message to display if success
 ---@return function cb: Schedule wrap callback function
 function M.on_exit(msg, opts)
-  local freeze_code = require("freeze-code")
+  local cfg = require("freeze-code.config")
   return vim.schedule_wrap(function(code, _)
     if code == 0 then
       vim.notify("[freeze-code.nvim] " .. msg, vim.log.levels.INFO, { title = "FreezeCode" })
     else
       vim.notify(M.stdio.stdout, vim.log.levels.ERROR, { title = "Freeze" })
     end
-    if freeze_code.config.copy == true then
-      freeze_code.copy(freeze_code.config)
+    if cfg.config.copy == true then
+      M.copy(cfg.config)
     end
-    if freeze_code.config.open == true then
-      freeze_code.open(freeze_code.config)
+    if cfg.config.open == true then
+      M.open(cfg.config)
     end
     if opts and opts.freeze then
       vim.wait(5000, function()

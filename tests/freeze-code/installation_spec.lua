@@ -51,11 +51,13 @@ describe("[freeze-code installation]", function()
   local mocks_bin_freeze = mocks_bin .. "/freeze"
   local mocks_go_bin = vim.fn.expand("./tests/mocks/go/bin")
   local mocks_go_bin_freeze = mocks_go_bin .. "/freeze"
+  local binary_fetcher = require("freeze-code.binary.binary_fetcher")
 
   before_each(function()
     ---@type FreezeCode
     freeze_code = require("freeze-code")
-    default_config = require("freeze-code").config
+    default_config = require("freeze-code.config").config
+    freeze_code.setup()
 
     remove_binaries(mocks_bin, mocks_go_bin)
 
@@ -79,7 +81,7 @@ describe("[freeze-code installation]", function()
       freeze_path = mocks_bin_freeze,
     }
     opts = vim.tbl_deep_extend("force", {}, default_config, opts or {})
-    freeze_code.agnostic_install_freeze(opts)
+    binary_fetcher:agnostic_installation(opts)
 
     local mock_binary = mocks_bin_freeze
     if vim.wait(delay, function()
@@ -98,7 +100,7 @@ describe("[freeze-code installation]", function()
       freeze_path = mocks_go_bin_freeze,
     }
     opts = vim.tbl_deep_extend("force", {}, default_config, opts or {})
-    freeze_code.go_install_freeze(opts)
+    binary_fetcher:go_installation(opts)
 
     local mock_binary = mocks_go_bin_freeze
     if vim.wait(delay, function()
