@@ -108,7 +108,7 @@ local copy_by_os = function(opts)
     cmd = {
       "osascript",
       "-e",
-      "'set the clipboard to (read (POSIX file \"" .. filename .. "\") as {«class PNGf»})'",
+      'set the clipboard to (read (POSIX file "' .. filename .. '") as {«class PNGf»})',
     }
   end
   if is_unix then
