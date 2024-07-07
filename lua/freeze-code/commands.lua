@@ -1,6 +1,7 @@
 local M = {}
 
 local utils = require("freeze-code.utils")
+local config = require("freeze-code.config")
 local logger = utils.logger
 local os_utils = utils.os
 local is_win = os_utils.is_win
@@ -92,6 +93,11 @@ end
 local copy_by_os = function(opts)
   local cmd = {}
   local filename = vim.fn.expand(opts.output)
+  if config.config.copy_cmd ~= "" then
+    local command = string.gsub(config.config.copy_cmd, "filename", filename)
+    cmd = { command }
+    return vim.fn.system(cmd)
+  end
   if vim.fn.executable("gclip") ~= 0 then
     cmd = { "gclip", "-copy", "-f", filename }
     return vim.fn.system(cmd)

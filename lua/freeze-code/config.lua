@@ -26,7 +26,7 @@ local default_config = {
   _installed = vim.fn.exepath("freeze") ~= "",
   install_path = vim.env.HOME .. "/.local/bin",
   freeze_path = vim.fn.exepath("freeze"),
-  copy_cmd = vim.env.HOME .. "/dev/nvim_plugins/freeze-code.nvim/bin/pngcopy-macos",
+  copy_cmd = "",
   copy = false,
   open = false,
   dir = vim.env.PWD,
