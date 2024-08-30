@@ -101,9 +101,9 @@ end
 ---@class FreezeCodeUtils
 ---@field os FreezeCodeOS
 M.os = {
-  is_win = vim.loop.os_uname().version:match("Windows"),
-  is_macos = vim.loop.os_uname().version:match("Darwin"),
-  is_unix = vim.loop.os_uname().version:match("Linux"),
+  is_win = vim.loop.os_uname().sysname:match("Windows"),
+  is_macos = vim.loop.os_uname().sysname:match("Darwin"),
+  is_unix = vim.loop.os_uname().sysname:match("Linux"),
 }
 
 return M
