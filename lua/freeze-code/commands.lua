@@ -1,7 +1,7 @@
 local M = {}
 
-local utils = require("freeze-code.utils")
 local config = require("freeze-code.config")
+local utils = require("freeze-code.utils")
 local logger = utils.logger
 local os_utils = utils.os
 local is_win = os_utils.is_win
