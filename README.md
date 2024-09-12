@@ -150,7 +150,19 @@ For more information, check
   (<a href="#readme-top">Back to top</a>)
 </div>
 
+### Contributors
+
+Thanks goes to these wonderful people that have contributed to this project:
+
+[![contributors][contributors-img]][contributors-url]
+
+<div align="right">
+  (<a href="#readme-top">Back to top</a>)
+</div>
+
 [stars-shield]: https://img.shields.io/github/stars/AlejandroSuero/freeze-code.nvim.svg?style=for-the-badge
 [stars-url]: https://github.com/AlejandroSuero/freeze-code.nvim/stargazers
 [issues-shield]: https://img.shields.io/github/issues/AlejandroSuero/freeze-code.nvim.svg?style=for-the-badge
 [issues-url]: https://github.com/AlejandroSuero/freeze-code.nvim/issues
+[contributors-url]: https://github.com/AlejandroSuero/freeze-code.nvim/graphs/contributors
+[contributors-img]: https://contrib.rocks/image?repo=AlejandroSuero/freeze-code.nvim
