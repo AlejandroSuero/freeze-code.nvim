@@ -29,7 +29,7 @@ Using your plugin manager at your disposal, in the example
 > [!note]
 >
 > If you don't have [freeze](https://github.com/charmbracelet/freeze) installed,
-> and you are have [golang](https://go.dev) installed, it will
+> and if you have [golang](https://go.dev) installed, it will
 > `go install github.com/charmbracelet/freeze@latest` for you 🫡.
 >
 > In the case that you don't have neither of those, don't you worry 😉, we got you
@@ -75,7 +75,7 @@ return {
 ```lua
 local opts = {
   freeze_path = vim.fn.exepath("freeze"), -- where is freeze installed
-  copy_cmd = "gclip", -- the default copy commands `gclip` or native to your OS (see below)
+  copy_cmd = "", -- the default copy command is native to your OS (see below)
   copy = false, -- copy after screenshot option
   open = false, -- open after screenshot option
   dir = vim.env.PWD, -- where is the image going to be saved "." as default
@@ -89,14 +89,15 @@ local opts = {
 
 > [!note]
 >
-> The default command will be [gclip](https://github.com/golang-design/clipboard)
-> if it is installed, otherwise ...
->
 > The commands to copy, as defaults per OS will be, for example, for Windows:
 > `Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.Clipboard]::SetImage(...)`,
 > for Linux: `xclip -selection clipboard -t image/png ...` if is an `X11` session,
 > `wl-copy < ...` if is a `Wayland` session, and for MacOS:
 > `osascript -e 'to set the clipboard to (read (POSIX file "...") as «class PNGf»)'`.
+
+If you specify a `copy_cmd` in the configuration, it will be used instead of the
+default one. To use the custom command, you need to specify `"filename"` in the
+command, where the image will be saved.
 
 Once you have it installed, you can use `:checkhealt freeze-code` to see if there
 are any problems with the installation or you need to install additional tools.
