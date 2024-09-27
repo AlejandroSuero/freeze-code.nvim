@@ -95,11 +95,7 @@ local copy_by_os = function(opts)
   local filename = vim.fn.expand(opts.output)
   if config.config.copy_cmd ~= "" then
     local command = string.gsub(config.config.copy_cmd, "filename", filename)
-    cmd = { command }
-    return vim.fn.system(cmd)
-  end
-  if vim.fn.executable("gclip") ~= 0 then
-    cmd = { "gclip", "-copy", "-f", filename }
+    cmd = { "sh", "-c", command }
     return vim.fn.system(cmd)
   end
   if is_win then
