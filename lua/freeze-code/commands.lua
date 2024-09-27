@@ -121,7 +121,7 @@ local copy_by_os = function(opts)
     if vim.env.XDG_SESSION_TYPE == "x11" then
       cmd = { "xclip", "-selection", "clipboard", "-t", "image/png", "-i", filename }
     else
-      cmd = { "wl-copy", "<", filename }
+      cmd = { "sh", "-c", "wl-copy <" .. filename }
     end
   end
   return vim.fn.system(cmd)
