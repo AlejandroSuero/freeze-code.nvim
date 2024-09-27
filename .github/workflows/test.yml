@@ -37,20 +37,3 @@ jobs:
           export VIM="${PWD}/_neovim/share/nvim/runtime"
           nvim --version
           make test-nvim
-
-      - uses: actions/checkout@v4
-
-      - name: Install LuaJIT
-        uses: leafo/gh-actions-lua@v10
-        with:
-          luaVersion: "luajit-2.1.0-beta3"
-
-      - name: Install Luarocks
-        uses: leafo/gh-actions-luarocks@v4
-
-      - name: Run test with vusted
-        shell: bash
-        run: |
-          luarocks install vusted
-          nvim --version
-          make test
