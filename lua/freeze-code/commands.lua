@@ -137,6 +137,8 @@ local open_by_os = function(opts)
   local filename = vim.fn.expand(opts.output)
   if is_win then
     cmd = { "explorer", filename }
+  elseif is_unix then
+    cmd = { "xdg-open", vim.fs.dirname(filename) }
   else
     cmd = { "open", filename }
   end
