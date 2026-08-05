@@ -99,6 +99,11 @@ If you specify a `copy_cmd` in the configuration, it will be used instead of the
 default one. To use the custom command, you need to specify `"filename"` in the
 command, where the image will be saved.
 
+> [!tip]
+>
+> For **WSL2** users, you can copy the image directly to the Windows host clipboard
+> by setting `copy_cmd` to `cat "filename" | clip.exe`.
+
 Once you have it installed, you can use `:checkhealt freeze-code` to see if there
 are any problems with the installation or you need to install additional tools.
 
